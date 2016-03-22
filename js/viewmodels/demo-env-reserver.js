@@ -67,7 +67,8 @@
     };
 
     this.koOpenEnvDialog = function() {
-      console.log( "koOpenEnvDialog" );
+      that.koEnvName( "" );
+      that.koEnvDescription( "" );
       envDlg.toggle(); // open!!
     };
 
@@ -79,7 +80,10 @@
     };
 
     this.koOpenReserveDialog = function() {
-      console.log( "koOpenReserveDialog" );
+      that.koStartTime( "" );
+      that.koEndTime( "" );
+      that.koReserveDescription( "" );
+      that.koReserveOwner( "" );
       reserveDlg.toggle(); // open!!
     };
 

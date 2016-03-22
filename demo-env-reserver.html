@@ -162,8 +162,7 @@
     <h1 data-bind="text: koSelectedEnv() ? koSelectedEnv().name: ''"></h1>
     <h6 data-bind="text: koSelectedEnv() ? koSelectedEnv().description: ''"></h6>
     <div id="mondayTable"></div>
-    <button data-dialog="addEnvDialog" class="trigger" data-bind="click: koOpenEnvDialog">環境追加</button>
-    <button data-dialog="addReserveDialog" class="trigger" data-bind="click: koOpenReserveDialog">環境予約</button>
+    <button data-dialog="addReserveDialog" class="trigger" data-bind="text: koSelectedEnv().name + 'を予約する！',click: koOpenReserveDialog"></button><br><br>
     <table class="bordered">
       <tbody>
         <tr>
@@ -175,7 +174,7 @@
           <th>削除</th>
         </tr>
         <!-- ko foreach: koSelectedEnv().reserves -->
-        <tr id="row" data-bind="click: $parent.koSelectReserve">
+        <tr id="row">
           <td data-bind="text: id"></td>
           <td data-bind="text: getDisplayDateString( start_time )"></td>
           <td data-bind="text: getDisplayDateString( end_time )"></td>
@@ -186,6 +185,7 @@
         <!-- /ko -->
       </tbody>
     </table>
+  <br><div Align="right"><button data-dialog="addEnvDialog" class="trigger" data-bind="click: koOpenEnvDialog">環境追加</button></div>
   </div>
   <div id="addEnvDialog" class="dialog">
     <div class="dialog__overlay"></div>
@@ -201,8 +201,8 @@
     <div class="dialog__overlay"></div>
     <div class="dialog__content">
       <h4 type="text" data-bind="text: koSelectedEnv().name + 'を予約する'"/></h4>
-      開始：<input type="text" class="startTimePicker" data-bind="text: koStartTime"><br>
-      終了：<input type="text" class="endTimePicker" data-bind="text: koEndTime"><br>
+      開始：<input type="text" class="startTimePicker" data-bind="value: koStartTime"><br>
+      終了：<input type="text" class="endTimePicker" data-bind="value: koEndTime"><br>
       デモの説明：<input data-bind="value: koReserveDescription"></input><br>
       予約者：<input data-bind="value: koReserveOwner"></input>
       <div><button class="action" data-dialog-close>閉じる</button>

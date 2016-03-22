@@ -10,26 +10,26 @@
     // 定数定義
     constants: {
       environments: {
-        all: "/environments",
+        all: "/",
         register: "/environments/register",
         update: "/environments",
         delete: "/environments/unregister"
       },
       reservations: {
-        show: "/reservations/show",
-        cancel: "/reservations/cancel",
-        reserve: "/reservations/reserve"
+        show: "/environments/reservations/show",
+        cancel: "/environments/reservations/cancel",
+        reserve: "/environments/reservations/reserve"
       }
     },
 
-    baseUrl: "https://tamikura.nsp.ricoh.co.jp:3000",
+    baseUrl: "http://mut-slave.nsp.ricoh.co.jp",
 
     _get: function( path, header, body ) {
       return $.ajax( {
         type: "GET",
         url: this.baseUrl + path,
         headers: header,
-        data: body
+        data: JSON.stringify( body )
       } );
     },
 
@@ -38,7 +38,7 @@
         type: "POST",
         url: this.baseUrl + path,
         headers: header,
-        data: body
+        data: JSON.stringify( body )
       } );
     },
 
@@ -47,7 +47,7 @@
         type: "DELETE",
         url: this.baseUrl + path,
         headers: header,
-        data: body
+        data: JSON.stringify( body )
       } );
     },
 

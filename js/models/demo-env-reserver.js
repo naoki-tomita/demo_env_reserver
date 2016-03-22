@@ -27,7 +27,7 @@
       that.environments = result;
       return services.DemoDataClient.show();
     } )
-    .done( function( result ) {
+    .always( function( result ) {
       that.reserves = result;
       that.trigger( "update", {
         environments: that.environments,
