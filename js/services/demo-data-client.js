@@ -22,47 +22,91 @@
       }
     },
 
-    baseUrl: "http://tamikura.nsp.ricoh.co.jp:3000",
+    baseUrl: "https://tamikura.nsp.ricoh.co.jp:3000",
 
     _get: function( path, header, body ) {
       return $.ajax( {
         type: "GET",
-	url: this.baseUrl + path,
+        url: this.baseUrl + path,
         headers: header,
         data: body
       } );
     },
 
     _post: function( path, header, body ) {
-      
+      return $.ajax( {
+        type: "POST",
+        url: this.baseUrl + path,
+        headers: header,
+        data: body
+      } );
     },
 
     _delete: function( path, header, body ) {
-      
+      return $.ajax( {
+        type: "DELETE",
+        url: this.baseUrl + path,
+        headers: header,
+        data: body
+      } );
     },
 
     environments: function() {
-      return this._get( this.constants.environments.all )
+      return this._get( this.constants.environments.all );
     },
 
     registerEnv: function( name, description ) {
-
+      return this._post( this.constants.environments.register,
+                         {
+                           "Content-Type": "application/json"
+                         }, {
+                           name: name,
+                           description: description
+                         } );
     },
 
     updateEnv: function( name, description ) {
-
+      return this._post( this.constants.environments.update + "/" + name,
+                         {
+                           "Content-Type": "application/json"
+                         }, {
+                           name: name,
+                           description: description
+                         } );
     },
 
     deleteEnv: function( name, description ) {
-
+      return this._delete( this.constants.environments.delete,
+                           {
+                             "Content-Type": "application/json"
+                           }, {
+                             name: name,
+                             description: description
+                           } );
     },
 
     reserve: function( environment, startTime, endTime, owner, description ) {
-
+      return this._post( this.constants.reservations.reserve,
+                         {
+                           "Content-Type": "application/json"
+                         },
+                         {
+                           env_name: environment,
+                           start_time: startTime,
+                           end_time: endTime,
+                           owner: owner,
+                           description: description
+                         } );
     },
 
     cancel: function( name, startTime ) {
-
+      return this._delete( this.constants.reservations.cancel,
+                           {
+                             "Content-Type": "application/json"
+                           }, {
+                             env_name: name,
+                             start_time: startTime
+                           } );
     },
 
     show: function() {
