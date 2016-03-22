@@ -22,16 +22,27 @@
       }
     },
 
-    _get: function( path, header, body ) {
+    baseUrl: "http://tamikura.nsp.ricoh.co.jp:3000",
 
+    _get: function( path, header, body ) {
+      return $.ajax( {
+        type: "GET",
+	url: this.baseUrl + path,
+        headers: header,
+        data: body
+      } );
     },
 
     _post: function( path, header, body ) {
+      
+    },
 
+    _delete: function( path, header, body ) {
+      
     },
 
     environments: function() {
-
+      return this._get( this.constants.environments.all )
     },
 
     registerEnv: function( name, description ) {
@@ -55,11 +66,11 @@
     },
 
     show: function() {
-
+      return this._get( this.constants.reservations.show );
     }
   };
 
-  if ( true ) {
+  if ( false ) {
     services.DemoDataClient = {
       resolver: function( dfd, data ) {
         setTimeout( function() {
