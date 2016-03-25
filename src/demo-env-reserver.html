@@ -1,265 +1,180 @@
 <!DOCTYPE html>
 <html lang="ja-JP">
+
 <head>
-  <script src="./js/vendor/jquery-2.2.1.min.js"></script>
-  <script src="./js/vendor/jquery-ui.min.js"></script>
-  <script src="./js/vendor/knockout-3.4.0.js"></script>
-  <script src="./js/vendor/jquery.datetimepicker.full.js"></script>
-  <script src="./Timetable/timetable.packed.js"></script>
-  <link rel="stylesheet" type="text/css" href="./css/dialog.css" />
-  <link rel="stylesheet" type="text/css" href="./css/dialog-sandra.css" />
-  <link rel="stylesheet" type="text/css" href="./css/jquery.datetimepicker.css" />
-  <link rel="stylesheet" type="text/css" href="./Timetable/timetable.packed.css" />
-  <script src="./js/vendor/modernizr.custom.js"></script>
   <meta charset="utf-8">
-  <title>Demo Env Reserver!!!</title>
-  <style type="text/css">
-    body {
-        width: 800px;
-        margin: 40px auto;
-        font-family: 'trebuchet MS', 'Lucida sans', Arial;
-        font-size: 14px;
-        color: #444;
-    }
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>デモ環境予約するやーつ</title>
+  <!-- Bootstrap -->
+  <link href="./css/bootstrap.min.css" rel="stylesheet">
 
-    #mainContent {
-      width: 800px;
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: xx-large;
-      font-weight: bold;
-      border-radius: 4px;
-      padding: 10px;
-      text-align: center;
-      line-height: 5px;
-    }
+  <!-- BootStrap Datepicker -->
+  <link href="./css/bootstrap-datepicker.min.css" rel="stylesheet">
 
-    table {
-        font-size: large;
-        border-spacing: 0;
-        width: 100%;
-        line-height: 10px;
-    }
+  <!-- FullCalendar -->
+  <link href='./css/fullcalendar.css' rel='stylesheet' />
 
-    .bordered {
-      border: solid #ccc 1px;
-      -moz-border-radius: 6px;
-      -webkit-border-radius: 6px;
-      border-radius: 6px;
-      -webkit-box-shadow: 0 1px 1px #ccc;
-      -moz-box-shadow: 0 1px 1px #ccc;
-      box-shadow: 0 1px 1px #ccc;
-    }
+  <!-- jQuery -->
+  <script src="./js/vendor/jquery-2.2.1.min.js"></script>
 
-    .bordered tr:hover {
-      background: #fbf8e9;
-      -o-transition: all 0.1s ease-in-out;
-      -webkit-transition: all 0.1s ease-in-out;
-      -moz-transition: all 0.1s ease-in-out;
-      -ms-transition: all 0.1s ease-in-out;
-      transition: all 0.1s ease-in-out;
-    }
+  <!-- BootStrap -->
+  <script src="./js/vendor/bootstrap.min.js"></script>
 
-    .bordered td, .bordered th {
-      border-left: 1px solid #ccc;
-      border-top: 1px solid #ccc;
-      padding: 10px;
-      text-align: left;
-    }
+  <!-- BootStrap Datepicker -->
+  <script src="./js/vendor/bootstrap-datepicker.min.js"></script>
+  <script src="./js/vendor/bootstrap-datepicker.ja.min.js"></script>
 
-    .bordered td {
-      cursor: pointer;
-    }
+  <!-- knockout -->
+  <script src="./js/vendor/knockout-3.4.0.js"></script>
 
-    .bordered th {
-      background-color: #dce9f9;
-      background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));
-      background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
-      background-image:    -moz-linear-gradient(top, #ebf3fc, #dce9f9);
-      background-image:     -ms-linear-gradient(top, #ebf3fc, #dce9f9);
-      background-image:      -o-linear-gradient(top, #ebf3fc, #dce9f9);
-      background-image:         linear-gradient(top, #ebf3fc, #dce9f9);
-      -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
-      -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
-      box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
-      border-top: none;
-      text-shadow: 0 1px 0 rgba(255,255,255,.5);
-    }
+  <!-- FullCalendar -->
+  <script src='./js/vendor/moment.min.js'></script>
+  <script src='./js/vendor/fullcalendar.js'></script>
+  <script src='./js/vendor/ja.js'></script>
 
-    .bordered td:first-child, .bordered th:first-child {
-      border-left: none;
-    }
-
-    .bordered th:first-child {
-      -moz-border-radius: 6px 0 0 0;
-      -webkit-border-radius: 6px 0 0 0;
-      border-radius: 6px 0 0 0;
-    }
-
-    .bordered th:last-child {
-      -moz-border-radius: 0 6px 0 0;
-      -webkit-border-radius: 0 6px 0 0;
-      border-radius: 0 6px 0 0;
-    }
-
-    .bordered th:only-child{
-      -moz-border-radius: 6px 6px 0 0;
-      -webkit-border-radius: 6px 6px 0 0;
-      border-radius: 6px 6px 0 0;
-    }
-
-    .bordered tr:last-child td:first-child {
-      -moz-border-radius: 0 0 0 6px;
-      -webkit-border-radius: 0 0 0 6px;
-      border-radius: 0 0 0 6px;
-    }
-
-    .bordered tr:last-child td:last-child {
-      -moz-border-radius: 0 0 6px 0;
-      -webkit-border-radius: 0 0 6px 0;
-      border-radius: 0 0 6px 0;
-    }
-
-    .arrow_box {
-      position: absolute;
-      background: #ffffff;
-      border: 2px solid #808080;
-      -webkit-border-radius: 10px;
-      -moz-border-radius: 0 0 10px 0;
-    }
-    .arrow_box:after, .arrow_box:before {
-      right: 100%;
-      top: 50%;
-      border: solid transparent;
-      content: " ";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-    }
-
-    .arrow_box:after {
-      border-color: rgba(255, 255, 255, 0);
-      border-right-color: #ffffff;
-      border-width: 15px;
-      margin-top: -15px;
-    }
-    .arrow_box:before {
-      border-color: rgba(128, 128, 128, 0);
-      border-right-color: #808080;
-      border-width: 18px;
-      margin-top: -18px;
-    }
-
-    .hidden {
-      visibility: hidden;
-    }
-  </style>
 </head>
 
 <body>
-  <div id="mainContent">
-    <select data-bind="options: koEnvList, optionsText: 'name', value: koSelectedEnv"></select>
-    <h1 data-bind="text: koSelectedEnv() ? koSelectedEnv().name: ''"></h1>
-    <h6 data-bind="text: koSelectedEnv() ? koSelectedEnv().description: ''"></h6>
-    <div id="mondayTable"></div>
-    <button data-dialog="addReserveDialog" class="trigger" data-bind="text: koSelectedEnv().name + 'を予約する！',click: koOpenReserveDialog"></button><br><br>
-    <table class="bordered">
-      <tbody>
-        <tr>
-          <th>デモID</th>
-          <th>開始時間</th>
-          <th>終了時間</th>
-          <th>コメント</th>
-          <th>予約者</th>
-          <th>削除</th>
-        </tr>
-        <!-- ko foreach: koSelectedEnv().reserves -->
-        <tr id="row">
-          <td data-bind="text: id"></td>
-          <td data-bind="text: getDisplayDateString( start_time )"></td>
-          <td data-bind="text: getDisplayDateString( end_time )"></td>
-          <td data-bind="text: description"></td>
-          <td data-bind="text: owner || ''"></td>
-          <td><button data-bind="click: $parent.koDeleteReserve">削除</button></td>
-        </tr>
-        <!-- /ko -->
-      </tbody>
-    </table>
-  <br><div Align="right"><button data-dialog="addEnvDialog" class="trigger" data-bind="click: koOpenEnvDialog">環境追加</button></div>
-  </div>
-  <div id="addEnvDialog" class="dialog">
-    <div class="dialog__overlay"></div>
-    <div class="dialog__content">
-      環境名：<input type="text" data-bind="value: koEnvName"/><br>
-      環境の説明：<br>
-      <textarea rows="6" cols="40" data-bind="value: koEnvDescription"></textarea>
-      <div><button class="action" data-dialog-close>閉じる</button>
-      <button class="action" data-bind="click: koAddEnv">登録</button></div>
-    </div>
-  </div>
-  <div id="addReserveDialog" class="dialog">
-    <div class="dialog__overlay"></div>
-    <div class="dialog__content">
-      <h4 type="text" data-bind="text: koSelectedEnv().name + 'を予約する'"/></h4>
-      開始：<input type="text" class="startTimePicker" data-bind="value: koStartTime"><br>
-      終了：<input type="text" class="endTimePicker" data-bind="value: koEndTime"><br>
-      デモの説明：<input data-bind="value: koReserveDescription"></input><br>
-      予約者：<input data-bind="value: koReserveOwner"></input>
-      <div><button class="action" data-dialog-close>閉じる</button>
-      <button class="action" data-bind="click: koAddReserve">登録</button></div>
-    </div>
-  </div>
-  <script src="./js/vendor/classie.js"></script>
-  <script src="./js/vendor/dialogFx.js"></script>
+  <h1>予約表</h1>
+  <div id='calendar'></div>
   <script src="./js/services/demo-data-client.js"></script>
   <script src="./js/models/demo-env-reserver.js"></script>
   <script src="./js/viewmodels/demo-env-reserver.js"></script>
   <script src="./js/apps/demo-env-reserver.js"></script>
-  <script>
-
-    var getDisplayDateString = function( dateTime ) {
-      var t = new Date( dateTime ), str = "";
-      str += t.getFullYear() + "/" + fillByZero( t.getMonth() + 1 ) + "/" + fillByZero( t.getDate() );
-      str += " ";
-      str += fillByZero( t.getHours() ) + ":" + fillByZero( t.getMinutes() );
-
-      return str;
-    };
-
-    $('.startTimePicker').datetimepicker({
-      format: 'Y-m-d H:i',
-      lang: 'ja',
-      step: 15
-    } );
-
-    $('.endTimePicker').datetimepicker({
-      format: 'Y-m-d H:i',
-      lang: 'ja',
-      step: 15
-    } );
-
-    var fillByZero = function( string ) {
-      return fillIn( "0", 2, string )
-    };
-
-    var fillIn = function( fill, count, string ) {
-      var fillStr = "";
-
-      for( var i = 0; i < count; i++ ) {
-        fillStr += fill;
-      }
-
-      return ( fillStr + string ).substr( -count );
-    };
-
-    ( function( root ) {
-      var apps, app;
-
-      apps = root.DemoEnvReserver.apps;
-
-      app = new apps.App();
-      app.initialize();
-    } )( window );
-  </script>
 </body>
+<script>
+  $(document).ready(function () {
+
+    // page is now ready, initialize the calendar...
+    $('#calendar').fullCalendar({
+      header: {
+        // title, prev, next, prevYear, nextYear, today
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month agendaWeek agendaDay'
+      },
+      // jQuery UI theme
+      theme: false,
+      // 最初の曜日
+      firstDay: 1, // 1:月曜日
+      // 土曜、日曜を表示
+      weekends: true,
+      // 週モード (fixed, liquid, variable)
+      weekMode: 'fixed',
+      // 週数を表示
+      weekNumbers: false,
+      // 高さ(px)
+      //height: 700,
+      // コンテンツの高さ(px)
+      //contentHeight: 600,
+      // カレンダーの縦横比(比率が大きくなると高さが縮む)
+      //aspectRatio: 1.35,
+      // ビュー表示イベント
+      viewDisplay: function (view) {
+        //alert('ビュー表示イベント ' + view.title);
+      },
+      // ウィンドウリサイズイベント
+      windowResize: function (view) {
+        //alert('ウィンドウリサイズイベント');
+      },
+      // 日付クリックイベント
+      dayClick: function () {
+        //alert('日付クリックイベント');
+      },
+      // 初期表示ビュー
+      defaultView: 'month',
+      // 終日スロットを表示
+      allDaySlot: true,
+      // 終日スロットのタイトル
+      allDayText: '終日',
+      // スロットの時間の書式
+      axisFormat: 'H(:mm)',
+      // スロットの分
+      slotMinutes: 15,
+      // 選択する時間間隔
+      snapMinutes: 15,
+      // TODO よくわからない
+      //defaultEventMinutes: 120,
+      // スクロール開始時間
+      firstHour: 9,
+      // 最小時間
+      minTime: 6,
+      // 最大時間
+      maxTime: 20,
+      // 表示する年
+      year: 2012,
+      // 表示する月
+      month: 12,
+      // 表示する日
+      day: 31,
+      // 時間の書式
+      timeFormat: 'H(:mm)',
+      // 列の書式
+      columnFormat: {
+        month: 'ddd', // 月
+        week: "d'('ddd')'", // 7(月)
+        day: "d'('ddd')'" // 7(月)
+      },
+      // タイトルの書式
+      titleFormat: {
+        month: 'yyyy年M月', // 2013年9月
+        week: "yyyy年M月d日{ ～ }{[yyyy年]}{[M月]d日}", // 2013年9月7日 ～ 13日
+        day: "yyyy年M月d日'('ddd')'" // 2013年9月7日(火)
+      },
+      // ボタン文字列
+      buttonText: {
+        prev: '&lsaquo;', // <
+        next: '&rsaquo;', // >
+        prevYear: '&laquo;', // <<
+        nextYear: '&raquo;', // >>
+        today: '今日',
+        month: '月',
+        week: '週',
+        day: '日'
+      },
+      // 月名称
+      monthNames: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      // 月略称
+      monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      // 曜日名称
+      dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+      // 曜日略称
+      dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+      // 選択可
+      selectable: true,
+      // 選択時にプレースホルダーを描画
+      selectHelper: true,
+      // 自動選択解除
+      unselectAuto: true,
+      // 自動選択解除対象外の要素
+      unselectCancel: '',
+      // イベントソース
+      eventSources: [{
+        events: [{
+          title: 'event1',
+          start: '2013-01-01'
+        }, {
+          title: 'event2',
+          start: '2013-01-02',
+          end: '2013-01-03'
+        }, {
+          title: 'event3',
+          start: '2013-01-05 12:30:00',
+          allDay: false // will make the time show
+        }]
+      }]
+    });
+    // 動的にオプションを変更する
+    //$('#calendar').fullCalendar('option', 'height', 700);
+
+    // カレンダーをレンダリング。表示切替時などに使用
+    //$('#calendar').fullCalendar('render');
+
+    // カレンダーを破棄（イベントハンドラや内部データも破棄する）
+    //$('#calendar').fullCalendar('destroy');
+  });
+</script>
+
 </html>
