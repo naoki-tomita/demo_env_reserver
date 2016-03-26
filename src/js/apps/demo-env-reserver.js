@@ -26,13 +26,14 @@
   };
 
   p._initizlizeModelsAndViewModels = function() {
-    var vm, model;
+    var vm, model, calendar;
     model = new models.DemoEnvReserver();
-    model.on( "update", function() {
+    model.on( "initialize", function() {
       vm = new viewmodels.DemoEnvReserver( model );
+      calendar = new viewmodels.CalendarManager( model );
       ko.applyBindings( vm );
     } );
-    model.update();
+    model.initialize();
   };
 
 } )( window );
