@@ -38,49 +38,75 @@
 <body>
   <div class="container">
     <div class="dropdown">
-      <button class="btn btn-default dropdown-toggle"
-              type="button"
-              id="dropdownMenu1"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="true"
-              data-bind="text: koSelectedEnv().name">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="text: koSelectedEnv().name">
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
         <!-- ko foreach: koEnvList -->
-        <li><a data-bind="text: name, click: $parent.koSelectEnv"></a></li>
+        <li>
+          <a data-bind="text: name, click: $parent.koSelectEnv"></a>
+        </li>
         <!-- /ko -->
       </ul>
     </div>
     <h1 data-bind="text: koSelectedEnv().name"></h1>
     <h6 data-bind="text: koSelectedEnv().description"></h6>
-    <div id="calendar"></div><br>
+    <div id="calendar"></div>
+    <br>
     <h1>予定リスト</h1>
     <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>start</th>
-        <th>end</th>
-        <th>owner</th>
-        <th>description</th>
-        <th>delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- ko foreach: koSelectedEnv().reserves -->
-      <tr>
-        <th data-bind="text: id"></th>
-        <th data-bind="text: getDisplayDateString( start_time )"></th>
-        <th data-bind="text: getDisplayDateString( end_time )"></th>
-        <th data-bind="text: owner"></th>
-        <th data-bind="text: description"></th>
-        <th><button type="button" class="btn btn-default" data-bind="click: $parent.koDeleteReserve">削除</button></th>
-      </tr>
-      <!-- /ko -->
-    </tbody>
-  </table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>start</th>
+          <th>end</th>
+          <th>owner</th>
+          <th>description</th>
+          <th>delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- ko foreach: koSelectedEnv().reserves -->
+        <tr>
+          <th data-bind="text: id"></th>
+          <th data-bind="text: getDisplayDateString( start_time )"></th>
+          <th data-bind="text: getDisplayDateString( end_time )"></th>
+          <th data-bind="text: owner"></th>
+          <th data-bind="text: description"></th>
+          <th>
+            <button type="button" class="btn btn-danger" data-bind="click: $parent.koDeleteReserve">削除</button>
+          </th>
+        </tr>
+        <!-- /ko -->
+      </tbody>
+    </table>
+    <div class="modal fade" id="event_dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">予約する</h4>
+          </div>
+          <div class="modal-body">
+            <h3 id="js-lbl-time"><h3>
+            <form>
+              <div class="form-group">
+                <label>予約者</label>
+                <input type="text" class="form-control" id="js-txt-owner">
+              </div>
+              <div class="form-group">
+                <label>デモの説明</label>
+                <input type="text" class="form-control" id="js-txt-description">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+            <button type="button" class="btn btn-primary" id="js-btn-reserve">予約する</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
   </div>
   <script src="./js/services/demo-data-client.js"></script>
   <script src="./js/models/demo-env-reserver.js"></script>
@@ -89,29 +115,30 @@
   <script src="./js/apps/demo-env-reserver.js"></script>
 </body>
 <script>
-  var getDisplayDateString = function( dateTime ) {
-    var t = new Date( dateTime ), str = "";
-    str += t.getFullYear() + "/" + fillByZero( t.getMonth() + 1 ) + "/" + fillByZero( t.getDate() );
+  var getDisplayDateString = function (dateTime) {
+    var t = new Date(dateTime),
+      str = "";
+    str += t.getFullYear() + "/" + fillByZero(t.getMonth() + 1) + "/" + fillByZero(t.getDate());
     str += " ";
-    str += fillByZero( t.getHours() ) + ":" + fillByZero( t.getMinutes() );
+    str += fillByZero(t.getHours()) + ":" + fillByZero(t.getMinutes());
     return str;
   };
-  var fillByZero = function( string ) {
-    return fillIn( "0", 2, string )
+  var fillByZero = function (string) {
+    return fillIn("0", 2, string)
   };
-  var fillIn = function( fill, count, string ) {
+  var fillIn = function (fill, count, string) {
     var fillStr = "";
-    for( var i = 0; i < count; i++ ) {
+    for (var i = 0; i < count; i++) {
       fillStr += fill;
     }
-    return ( fillStr + string ).substr( -count );
+    return (fillStr + string).substr(-count);
   };
-  ( function( root ) {
-    $( document ).ready(function () {
+  (function (root) {
+    $(document).ready(function () {
       var app = new root.DemoEnvReserver.apps.App();
       app.initialize();
     });
-  } )( window );
+  })(window);
 </script>
 
 </html>

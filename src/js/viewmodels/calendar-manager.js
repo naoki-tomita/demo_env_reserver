@@ -30,8 +30,40 @@
     this.calendar.fullCalendar( "removeEvents" );
   };
 
-  p.addEvent = function( owner, start, end, description ) {
-    this.model.addEvent( owner, start, end, description );
+  p.addEvent = function( start, end ) {
+    var that = this;
+    $( "#event_dialog" ).modal( "show" );
+    $( "#js-lbl-time" ).html( calendarDateToString( start ) + " - " + calendarDateToString( end ) );
+    $( "#js-btn-reserve" ).click( function() {
+      var owner, description;
+      owner = $( "#js-txt-owner" ).val();
+      description = $( "#js-txt-description" ).val();
+      that.model.addEvent( owner, start, end, description );
+      that.calendar.fullCalendar( "unselect" );
+      $( "#event_dialog" ).modal( "hide" );
+    } );
+  };
+
+  var calendarDateToString = function( calendarDate ) {
+    return calendarDate._i[ 0 ] + "/" +
+           fillByZero( calendarDate._i[ 1 ] + 1 ) + "/" +
+           fillByZero( calendarDate._i[ 2 ] ) + " " +
+           fillByZero( calendarDate._i[ 3 ] ) + ":" +
+           fillByZero( calendarDate._i[ 4 ] );
+  };
+
+  var fillByZero = function( string ) {
+    return fillIn( "0", 2, string )
+  };
+
+  var fillIn = function( fill, count, string ) {
+    var fillStr = "";
+
+    for( var i = 0; i < count; i++ ) {
+      fillStr += fill;
+    }
+
+    return ( fillStr + string ).substr( -count );
   };
 
   p.setEvent = function( owner, start, end, description ) {
@@ -64,11 +96,7 @@
       minTime: "09:00:00",
       maxTime: "18:00:00",
       select: function(start, end) {
-        var title = prompt("Event Title:");
-        if ( title ) {
-          that.addEvent( title, start, end );
-        }
-        that.calendar.fullCalendar("unselect");
+        that.addEvent( start, end );
       },
       editable: true,
       eventLimit: true,
