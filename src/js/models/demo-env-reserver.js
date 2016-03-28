@@ -16,21 +16,33 @@
 
   // 以下、メソッド定義
 
-  p.setSelectedEnv = function( env ) {
-    this.selectedEnv = env;
+  p.setSelectedEnv = function( envName ) {
+    this.selectedEnv = envName;
     this.trigger( "update" );
   };
 
   p.getSelectedEnv = function() {
-    return this.selectedEnv;
+    for( var i = 0; i < this.environments.length; i++ ) {
+      if ( this.selectedEnv === this.environments[ i ].name ) {
+        return this.environments[ i ];
+      }
+    }
   };
 
   p.addEvent = function( owner, start, end, description ) {
     var that = this;
-    DemoDataClient.reserve( this.selectedEnv.name, owner, start, end, description )
+    DemoDataClient.reserve( this.selectedEnv, start, end, owner, description )
     .then( function() {
-      that.trigger( "update" );
+      that.update();
     } );
+  };
+
+  p.cancelEvent = function( item ) {
+    var that = this;
+    DemoDataClient.cancel( this.selectedEnv, item.start_time )
+    .then( function() {
+      that.update();
+    } )
   };
 
   p.addEnv = function( name, description ) {

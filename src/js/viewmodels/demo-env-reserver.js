@@ -12,7 +12,7 @@
     this.model = model;
     this.koEnvList = ko.observable( model.getReserves() );
     this.koSelectedEnv = ko.observable( model.getReserves()[ 0 ] );
-    this.model.setSelectedEnv( this.koSelectedEnv() );
+    this.model.setSelectedEnv( this.koSelectedEnv().name );
     this.koEnvName = ko.observable( null );
     this.koEnvDescription = ko.observable( null );
 
@@ -31,7 +31,7 @@
     var that = this;
 
     this.koSelectReserve = function( item ) {
-      
+      // 予約をクリックしたら、その週を表示するとか？
     };
 
     this.koAddEnv = function() {
@@ -42,14 +42,17 @@
 
     };
 
+    this.koDeleteReserve = function( item ) {
+      that.model.cancelEvent( item );
+    };
+
     this.koSelectEnv = function( item ) {
-      that.model.setSelectedEnv( item );
       that.koSelectedEnv( item );
+      that.model.setSelectedEnv( that.koSelectedEnv().name );
     };
 
     this.model.on( "update", function() {
-      that.koEnvList( that.model.getReserves() );
-      that.update();
+      that.koSelectedEnv( that.model.getSelectedEnv() );
     } );
   };
 

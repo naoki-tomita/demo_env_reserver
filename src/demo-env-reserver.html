@@ -53,9 +53,10 @@
         <!-- /ko -->
       </ul>
     </div>
-    <h1>予約表</h1>
+    <h1 data-bind="text: koSelectedEnv().name"></h1>
+    <h6 data-bind="text: koSelectedEnv().description"></h6>
     <div id="calendar"></div><br>
-    <h1>今日の予定</h1>
+    <h1>予定リスト</h1>
     <table class="table table-striped">
     <thead>
       <tr>
@@ -75,7 +76,7 @@
         <th data-bind="text: getDisplayDateString( end_time )"></th>
         <th data-bind="text: owner"></th>
         <th data-bind="text: description"></th>
-        <th>削除ボタン予定地</th>
+        <th><button type="button" class="btn btn-default" data-bind="click: $parent.koDeleteReserve">削除</button></th>
       </tr>
       <!-- /ko -->
     </tbody>

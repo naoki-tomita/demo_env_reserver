@@ -114,7 +114,7 @@
     }
   };
 
-  if ( true ) {
+  if ( false ) {
     services.DemoDataClient = {
       resolver: function( dfd, data ) {
         setTimeout( function() {

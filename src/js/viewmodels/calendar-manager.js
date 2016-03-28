@@ -49,7 +49,7 @@
     var that = this;
     this.calendar = $("#calendar").fullCalendar({
       firstDay: 1,
-      height: 400,
+      height: 700,
       header: {
         left: "prev,next today",
         center: "title",
