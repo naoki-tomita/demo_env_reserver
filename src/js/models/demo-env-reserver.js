@@ -37,9 +37,9 @@
     } );
   };
 
-  p.cancelEvent = function( item ) {
+  p.cancelEvent = function( start_time ) {
     var that = this;
-    DemoDataClient.cancel( this.selectedEnv, item.start_time )
+    DemoDataClient.cancel( this.selectedEnv, start_time )
     .then( function() {
       that.update();
     } )
@@ -55,6 +55,11 @@
     .then( function() {
       that.trigger( "initialize" );
     } )
+  };
+
+  p.updateEvent = function( id, start, end, owner, description ) {
+    var that = this;
+    return DemoDataClient.update( id, start, end, owner, description );
   };
 
   p.update = function() {

@@ -22,7 +22,7 @@
       }
     },
 
-    baseUrl: "http://mut-slave.nsp.ricoh.co.jp",
+    baseUrl: "http://mut-slave.nsp.ricoh.co.jp:10080/env_manager",
 
     _get: function( path, header, body ) {
       return $.ajax( {

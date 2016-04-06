@@ -43,7 +43,7 @@
     };
 
     this.koDeleteReserve = function( item ) {
-      that.model.cancelEvent( item );
+      that.model.cancelEvent( item.start_time );
     };
 
     this.koSelectEnv = function( item ) {

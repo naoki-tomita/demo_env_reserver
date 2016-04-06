@@ -32,6 +32,8 @@
 
   p.addEvent = function( start, end ) {
     var that = this;
+    $( "#js-txt-owner" ).val( "" );
+    $( "#js-txt-description" ).val( "" );
     $( "#event_dialog" ).modal( "show" );
     $( "#js-lbl-time" ).html( calendarDateToString( start ) + " - " + calendarDateToString( end ) );
     $( "#js-btn-reserve" ).click( function() {
@@ -76,6 +78,13 @@
     };
     this.calendar.fullCalendar( "renderEvent", eventData, true );
   };
+
+  p.updateEvent = function( event ) {
+    // どのイベントかを探し出す。たぶん、idとかかな。event名をパースして、idを取りだそう。
+
+    // ほんでupdateしよう
+    return this.model.updateEvent( id, start, end, owner, description );
+  }
 
   p.initializeCalendar = function() {
     var that = this;
