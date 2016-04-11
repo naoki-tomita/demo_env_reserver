@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>デモ環境追加するやーつ</title>
+  <!-- Bootstrap -->
+  <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- BootStrap Datepicker -->
+  <link href="./css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+  <!-- FullCalendar -->
+  <link href="./css/fullcalendar.css" rel="stylesheet" />
+
+  <!-- jQuery -->
+  <script src="./js/vendor/jquery-2.2.1.min.js"></script>
+
+  <!-- BootStrap -->
+  <script src="./js/vendor/bootstrap.min.js"></script>
+
+  <!-- knockout -->
+  <script src="./js/vendor/knockout-3.4.0.js"></script>
+
+</head>
+<body>
+  <br>
+  <div class="container">
+    <div Align="right"><button type="button" class="btn" onclick="location.href='./demo-env-reserver.html'">デモ環境予約画面へ</button></div>
+    <h1>デモ環境一覧</h1>
+    <table class="table table-striped">
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Delete</th>
+      </tr>
+      <!-- ko foreach: koEnvList -->
+      <tr>
+        <th data-bind="text: name"></th>
+        <th data-bind="text: description"></th>
+        <th>
+          <button type="button" class="btn btn-danger" data-bind="click: $parent.koDeleteEnv">削除</button>
+        </th>
+      </tr>
+      <!-- /ko -->
+      <tr>
+        <th>
+          <div class="form-group">
+            <label class="sr-only" for="name">Username</label>
+            <input data-bind="value: koNewEnvName" type="text" class="form-control" placeholder="Environment name"/>
+          </div>
+        </th>
+        <th>
+          <div class="form-group">
+            <label class="sr-only" for="name">Password</label>
+            <input data-bind="value: koNewEnvDescription" type="text" class="form-control" placeholder="Environment description"/>
+          </div>
+        </th>
+        <th>
+          <button type="button" class="btn btn-success" data-bind="click: koAddEnv">追加</button>
+        </th>
+      </tr>
+    </table>
+  </div>
+  <script src="./js/services/demo-data-client.js"></script>
+  <script src="./js/models/demo-env-reserver.js"></script>
+  <script src="./js/viewmodels/demo-env-reserver.js"></script>
+  <script src="./js/viewmodels/calendar-manager.js"></script>
+  <script src="./js/apps/demo-env-reserver.js"></script>
+</body>
+<script>
+  ( function ( root ) {
+    var app, vm, model, DemoDataClient, ko = root.ko, $ = root.$;
+    DemoDataClient = root.DemoEnvReserver.services.DemoDataClient;
+    vm = {
+      koEnvList: ko.observable(),
+      koNewEnvName: ko.observable(),
+      koNewEnvDescription: ko.observable(),
+      koAddEnv: function() {
+        var that = this, name, description;
+        name = this.koNewEnvName();
+        description = this.koNewEnvDescription();
+        DemoDataClient.registerEnv( name, description )
+        .done( function() {
+          that.koNewEnvName( "" );
+          that.koNewEnvDescription( "" );
+          update();
+        } )
+        .fail( function() {
+
+        } );
+      },
+      koDeleteEnv: function( item ) {
+        DemoDataClient.deleteEnv( item.name, item.description )
+        .then( function() {
+          update();
+        } );
+      }
+    };
+
+    ko.applyBindings( vm );
+
+    var update = function() {
+      DemoDataClient.environments()
+      .then( function( result ) {
+        vm.koEnvList( result );
+      } );
+    }
+    update();
+  } )( window );
+</script>
+
+</html>

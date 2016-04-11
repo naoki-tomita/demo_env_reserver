@@ -36,7 +36,9 @@
 </head>
 
 <body>
+  <br>
   <div class="container">
+    <div Align="right"><button type="button" class="btn" onclick="location.href='./demo-env-manager.html'">デモ環境管理画面へ</button></div>
     <div class="dropdown">
       <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="text: koSelectedEnv().name">
         <span class="caret"></span>
@@ -101,7 +103,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+            <button type="button" class="btn btn-default" id="js-btn-close" data-dismiss="modal">閉じる</button>
             <button type="button" class="btn btn-primary" id="js-btn-reserve">予約する</button>
           </div>
         </div><!-- /.modal-content -->

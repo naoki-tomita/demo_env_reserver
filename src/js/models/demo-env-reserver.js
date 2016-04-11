@@ -45,10 +45,6 @@
     } )
   };
 
-  p.addEnv = function( name, description ) {
-
-  };
-
   p.initialize = function() {
     var that = this;
     this._fetchAll()
@@ -59,7 +55,11 @@
 
   p.updateEvent = function( id, start, end, owner, description ) {
     var that = this;
-    return DemoDataClient.update( id, start, end, owner, description );
+    return DemoDataClient.update( this.selectedEnv, id, start, end, owner, description )
+    .then( function() {
+      that.update();
+      return $.Deferred().resolve().promise();
+    } ) // okならupdateする
   };
 
   p.update = function() {

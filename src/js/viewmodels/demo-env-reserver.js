@@ -12,7 +12,7 @@
     this.model = model;
     this.koEnvList = ko.observable( model.getReserves() );
     this.koSelectedEnv = ko.observable( model.getReserves()[ 0 ] );
-    this.model.setSelectedEnv( this.koSelectedEnv().name );
+    this.model.setSelectedEnv( this.koSelectedEnv() ? this.koSelectedEnv().name : "" );
     this.koEnvName = ko.observable( null );
     this.koEnvDescription = ko.observable( null );
 

@@ -18,11 +18,12 @@
       reservations: {
         show: "/environments/reservations/show",
         cancel: "/environments/reservations/cancel",
-        reserve: "/environments/reservations/reserve"
+        reserve: "/environments/reservations/reserve",
+        update: "/environments/reservations/update"
       }
     },
 
-    baseUrl: "http://mut-slave.nsp.ricoh.co.jp:10080/env_manager",
+    baseUrl: "http://mut-slave.nsp.ricoh.co.jp/env_manager",
 
     _get: function( path, header, body ) {
       return $.ajax( {
@@ -91,6 +92,21 @@
                            "Content-Type": "application/json"
                          },
                          {
+                           env_name: environment,
+                           start_time: startTime,
+                           end_time: endTime,
+                           owner: owner,
+                           description: description
+                         } );
+    },
+
+    update: function( environment, id, startTime, endTime, owner, description ) {
+      return this._post( this.constants.reservations.update,
+                         {
+                           "Content-Type": "application/json"
+                         },
+                         {
+                           id: id,
                            env_name: environment,
                            start_time: startTime,
                            end_time: endTime,
