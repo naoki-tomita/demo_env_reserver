@@ -31,8 +31,9 @@
     this.calendar.fullCalendar( "removeEvents" );
   };
 
-  p.addEvent = function( start, end ) {
+  p.addEvent = function( start, end, isAllDay ) {
     var that = this;
+    // 表示
     $( "#js-txt-owner" ).val( "" );
     $( "#js-txt-description" ).val( "" );
     $( "#event_dialog" ).modal( "show" );
@@ -41,6 +42,12 @@
       var owner, description;
       owner = $( "#js-txt-owner" ).val();
       description = $( "#js-txt-description" ).val();
+      // 時間の修正
+      // なぜか知らないが、Monthのページでは、時間がローカル時間ではなく、UTC時間で取得されてしまう。。。
+      // なので、UTC時間で0:00~0:00の設定を-9時間分ずらすことで、日本時間に対応。
+      if ( isAllDay ) {
+        fixAllDayEvent( start, end );
+      }
       that.model.addEvent( owner, start, end, description );
       that.calendar.fullCalendar( "unselect" );
       $( "#event_dialog" ).modal( "hide" );
@@ -54,6 +61,11 @@
            fillByZero( calendarDate.date() ) + " " +
            fillByZero( calendarDate.hour() ) + ":" +
            fillByZero( calendarDate.minute() );
+  };
+
+  var fixAllDayEvent = function( start, end ) {
+    start.utc().hour( -9 );
+    end.utc().hour( -9 );
   };
 
   var fillByZero = function( string ) {
@@ -111,7 +123,7 @@
       timeFormat: "H:mm",
       allDaySlot: false,
       select: function( start, end ) {
-        that.addEvent( start, end );
+        that.addEvent( start, end, this.type === "month" );
       },
       editable: true,
       eventLimit: true,
