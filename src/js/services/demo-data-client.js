@@ -52,6 +52,15 @@
       } );
     },
 
+    _put: function( path, header, body ) {
+      return $.ajax( {
+        type: "PUT",
+        url: this.baseUrl + path,
+        headers: header,
+        data: JSON.stringify( body )
+      } );
+    },
+
     environments: function() {
       return this._get( this.constants.environments.all );
     },
@@ -101,7 +110,7 @@
     },
 
     update: function( environment, id, startTime, endTime, owner, description ) {
-      return this._post( this.constants.reservations.update,
+      return this._put( this.constants.reservations.update,
                          {
                            "Content-Type": "application/json"
                          },

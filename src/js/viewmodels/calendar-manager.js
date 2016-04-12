@@ -94,7 +94,7 @@
     var that = this;
     this.calendar = $("#calendar").fullCalendar({
       firstDay: 1,
-      height: 500,
+      height: 520,
       header: {
         left: "prev,next today",
         center: "title",
@@ -108,6 +108,8 @@
       slotDuration: "00:30:00",
       minTime: "09:00:00",
       maxTime: "18:00:00",
+      timeFormat: "H:mm",
+      allDaySlot: false,
       select: function( start, end ) {
         that.addEvent( start, end );
       },
